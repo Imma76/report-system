@@ -1,7 +1,8 @@
 import express from 'express'
+import userRoutes from './user.routes.js';
 
 const indexRoute = express.Router();
 
-indexxRouter.post('/user',);
+indexRoute.use('/user',userRoutes);
 
 export default indexRoute;
