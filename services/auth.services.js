@@ -1,8 +1,10 @@
-import reportModel from "../models/report.model.js";
+import userModel from "../models/user.model.js";
 
 class AuthServices{
     async createUser() {
-        const newUSer = reportModel.create(data);
-        
+        const newUSer = userModel.create(data);
+
     }
 }
+
+export default new AuthServices();
