@@ -1,20 +1,17 @@
 import mongoose from   'mongoose'
 
 
-const reportSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     name: String,
-    anonymous: Boolean,
     regNo: String,
-    description: String,
     imageUrl: String,
-    videoUrl: String,
-    voiceNoteUrl: String,
+    email:String,
     password: String,
-    phoneNumber: String,
+    mobile: String,
     
     
 }, { timeStamps: true })
 
-const reportModel = mongoose.model('Report System', reportSchema);
+const userModel = mongoose.model('Users', userSchema);
 
-export default reportModel;
+export default userModel;
