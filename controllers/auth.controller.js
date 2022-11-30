@@ -1,6 +1,7 @@
 import authServices from "../services/auth.services.js";
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
+import  Jwt  from "jsonwebtoken";
 class AuthController{
     async createUser(req, res){
         if (_.isEmpty(req.body)) {
@@ -16,9 +17,27 @@ class AuthController{
         }
 
         const create = await authServices.createUser(data);
-        return res.status(201).send({status:true, message:'User created successfully'})
+        return res.status(201).send({status:false, message:'User created successfully'})
     }
     async loginUser(req, res) {
+        const getUser = await authServices.getUserByNumber(req.body.mobile);
+        if (_.isEmpty(getUser)) {
+            return res.status(404).send({ status: false, message: "User not found" });
+        }
+        const verifyPassword = bcrypt.compareSync(req.body.password, getUser.password);
+        if (!verifyPassword) {
+
+            return res.status(500).send({ status: true, message: 'Number or password is incorrect' });
+        }
+        const omittedData = _.omit(getUser, 'password');
+
+        const generatedToken = Jwt.sign(omittedData, process.env.token, { expiresIn: '200h' });
+        
+        
+        return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,token:generatedToken}});
+        
+        
+
         
     }
 }
