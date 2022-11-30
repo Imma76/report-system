@@ -1,7 +1,7 @@
-import authServices from "../services/auth.services.js";
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 import _ from 'lodash';
-import  Jwt  from "jsonwebtoken";
+import authServices from "../services/auth.services.js";
 class AuthController{
     async createUser(req, res){
         if (_.isEmpty(req.body)) {
@@ -21,6 +21,7 @@ class AuthController{
     }
     async loginUser(req, res) {
         const getUser = await authServices.getUserByNumber(req.body.mobile);
+        console.log(getUser);
         if (_.isEmpty(getUser)) {
             return res.status(404).send({ status: false, message: "User not found" });
         }
@@ -30,11 +31,12 @@ class AuthController{
             return res.status(500).send({ status: true, message: 'Number or password is incorrect' });
         }
         const omittedData = _.omit(getUser, 'password');
+      
 
-        const generatedToken = Jwt.sign(omittedData, process.env.token, { expiresIn: '200h' });
+        const generatedToken = jwt.sign({_id:getUser._id, mobile:getUser.mobile}, process.env.TOKEN_SECRET, { expiresIn: '200h' });
+        console.log(generatedToken);
         
-        
-        return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,token:generatedToken}});
+        return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,},token:generatedToken});
         
         
 
