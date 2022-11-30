@@ -18,6 +18,9 @@ class AuthController{
         const create = await authServices.createUser(data);
         return res.status(201).send({status:true, message:'User created successfully'})
     }
+    async loginUser(req, res) {
+        
+    }
 }
 
 export default new AuthController();
