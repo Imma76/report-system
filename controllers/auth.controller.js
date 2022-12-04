@@ -5,7 +5,7 @@ import authServices from "../services/auth.services.js";
 class AuthController{
     async createUser(req, res){
         if (_.isEmpty(req.body)) {
-            return res.status(500).send({ message: 'complete all fields' });
+            return res.status(500).send({status:false, message: 'complete all fields' });
         }
         const reqBody = req.body;
         const data = {
@@ -17,7 +17,7 @@ class AuthController{
         }
 
         const create = await authServices.createUser(data);
-        return res.status(201).send({status:false, message:'User created successfully'})
+        return res.status(201).send({status:true, message:'User created successfully'})
     }
     async loginUser(req, res) {
         const getUser = await authServices.getUserByNumber(req.body.mobile);
