@@ -9,7 +9,7 @@ import emailSenderConfig from '../config/email.sender.config.js';
 
 
 class AuthController{
-    refreshTokens = {};
+   
    
     async createUser(req, res) {
        
@@ -63,11 +63,11 @@ class AuthController{
         const generatedToken = jwt.sign({ _id: getUser._id, mobile: getUser.mobile }, process.env.TOKEN_SECRET, { expiresIn: '200h' });
         let refreshToken = randToken.uid(256)
        
-        refreshTokens[refreshToken] = getUser.email
+    
 
-        console.log(refreshTokens);
+       
         
-        return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,},token:generatedToken,refreshToken:refreshToken});
+        return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,},token:generatedToken,});
     }
     async getToken(req,res) {
         let refreshToken = req.body.refreshToken;
