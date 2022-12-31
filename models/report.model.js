@@ -7,6 +7,10 @@ const reportSchema = mongoose.Schema({
         required: true,
         
     },
+    status:{
+        type: String,
+        enum:['submitted','inReview','treated']
+    },
     name:{
         type:String,
         required: true,
