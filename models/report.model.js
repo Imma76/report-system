@@ -38,7 +38,9 @@ const reportSchema = mongoose.Schema({
 
 },{timestamps:true} );
 
-const reportModel = mongooes
+const reportModel = mongoose.model('report', reportSchema);
+
+export default reportModel;
 
 
 
