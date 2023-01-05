@@ -5,7 +5,8 @@ import authServices from "../services/auth.services.js";
 import nodemailer, { createTransport } from 'nodemailer';
 import google from 'googleapis';
 import randToken from 'rand-token';
-import aws from 'aws-sdk';
+import sendGridTransport from 'sendgrid';
+import { validationResult } from 'express-validator';
 
 
 class AuthController{
@@ -16,6 +17,11 @@ class AuthController{
     async createUser(req, res) {
        
         const OAuth2 = google.Auth.OAuth2Client;
+        const errors = validationResult(req);
+        console.log(errors);
+        if (!errors.isEmpty()) {
+            return res.status(422).send({ message: `${errors.array()[0].msg} ` });
+        }
         if (_.isEmpty(req.body)) {
             return res.status(500).send({status:false, message: 'complete all fields' });
         }
@@ -42,6 +48,19 @@ class AuthController{
 
 
         const create = await authServices.createUser(data);
+        const transporter = nodemailer.createTransport(sendGridTransport({
+            auth:{
+             
+                api_key:process.env.SEND_GRID_KEY
+            }
+        }))
+
+        transporter.sendMail({
+            to: 'emmanuelugwueze6@gmail.com',
+            from:'report@gmail.com',
+            subject: 'Sign up succeeded',
+            html:'<h1>You have succcessfully signed up on report system</h1>'
+        }).catch(err=>console.log(`here${err}`))
         return res.status(201).send({status:true, message:'User created successfully'})
     }
     
