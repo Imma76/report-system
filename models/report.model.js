@@ -11,24 +11,10 @@ const reportSchema = mongoose.Schema({
         type: String,
         enum:['submitted','inReview','treated']
     },
-    name:{
-        type:String,
-        required: true,
-        
-    },
-    regNo:{
-        type:String,
-        required: true,
-    
-    },
-    phoneNumber:{
-        type:String,
-        required: true,
-    },
-    email:{
-        type:String,
-        required: true,
-    },
+    userId: {
+       type:String,
+       ref:'Users'
+   },
     imageUrl:{
         type:Array,
         
@@ -38,7 +24,8 @@ const reportSchema = mongoose.Schema({
     },
     videoUrl :{
         type:Array
-    }
+    },
+
 
 },{timestamps:true} );
 
