@@ -7,15 +7,15 @@ import google from 'googleapis';
 import randToken from 'rand-token';
 import sendGridTransport from 'sendgrid';
 import { validationResult } from 'express-validator';
+import aws from 'aws-sdk';
+
 
 
 class AuthController{
          
    
-   
-   
+    
     async createUser(req, res) {
-       
         const OAuth2 = google.Auth.OAuth2Client;
         const errors = validationResult(req);
         console.log(errors);
