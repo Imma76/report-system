@@ -18,7 +18,7 @@ const middleware = (app) => {
     app.use(express.urlencoded({ extended: false }))
     app.use(cors());
     app.use(morgan());
-  //  app.use(session({resave:false,saveUninitialized:false,secret:'my secret',store:store}))
+    app.use(session({resave:false,saveUninitialized:false,secret:'my secret',store:store}))
     database();
     app.use(handleError);
     app.use(indexRoute);
