@@ -78,8 +78,8 @@ class AuthController{
       
 
         const generatedToken = jwt.sign({ _id: getUser._id, mobile: getUser.mobile }, process.env.TOKEN_SECRET, { expiresIn: '200h' });
-        req.session.loggedIn = true;
-        req.session.user = getUser;
+        // req.session.loggedIn = true;
+        // req.session.user = getUser;
         return res.status(200).send({status: true, message: 'user logged in successfully',data:{...omittedData,},token:generatedToken,});
     }
    

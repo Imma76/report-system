@@ -1,5 +1,5 @@
 import express from 'express';
-import morgan from 'morgan';
+import morgan, { format } from 'morgan';
 import indexRoute from '../routes/index.routes.js';
 import database from '../config/db.config.js';
 import handleError from './error.middleware.js';
@@ -17,8 +17,8 @@ const middleware = (app) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }))
     app.use(cors());
-    app.use(morgan());
-    app.use(session({resave:false,saveUninitialized:false,secret:'my secret',store:store}))
+    app.use(morgan( "combined"));
+   // app.use(session({resave:false,saveUninitialized:false,secret:'my secret',store:store}))
     database();
     app.use(handleError);
     app.use(indexRoute);
