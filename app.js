@@ -3,7 +3,7 @@ import express from 'express';
 
 import dotenv from 'dotenv';
 import middleware from './middlewares/index.middlewares.js';
-import session from 'express-session';
+
 
 
 dotenv.config()
